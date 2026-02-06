@@ -9,8 +9,8 @@ export const products = pgTable("products", {
   code: text("code").notNull().unique(),
   price: real("price").notNull(),
   categoryId: integer("category_id").references(() => categories.id),
-  featured: boolean("featured").default(false),
-  active: boolean("active").default(true),
+  featured: boolean("featured").default(false).notNull(),
+  active: boolean("active").default(true).notNull(),
   productDetailsId: integer("product_details_id").references(() => productDetails.id),
 })
 

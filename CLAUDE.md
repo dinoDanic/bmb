@@ -31,9 +31,9 @@ pnpm lint
   - `app/layout.tsx` - Root layout with font configuration
   - `app/globals.css` - Global styles and Tailwind theme variables
 
-- `feature/` - Feature-based modules organized by domain
+- `features/` - Feature-based modules organized by domain
   - Each feature may contain: `components/`, `sections/`, `data/`, `api/`, `hooks/`, `helpers/`
-  - Examples: `feature/landing/`, `feature/categories/`, `feature/products/`
+  - `features/admin/` - Admin panel features (auth, categories, products, product-details, seed)
   - Features are composable; landing page composes categories and products features
 
 - `components/` - Shared React components
@@ -62,6 +62,16 @@ import { Button } from "@/components/ui/button"
 - All UI components use Base UI React (`@base-ui/react`)
 - Styling with Tailwind CSS v4 configured via `postcss.config.mjs`
 
+## Critical Rules
+
+**ALWAYS ASK BEFORE:**
+- Making architectural decisions
+- Creating or modifying database migrations
+- Changing project structure or build configuration
+- Adding new dependencies or tools
+
+This is a dev environment - we can dump data. Don't overthink or create migration scripts unless explicitly requested.
+
 ## Code Conventions
 
 ### TypeScript
@@ -72,6 +82,11 @@ import { Button } from "@/components/ui/button"
 - Avoid `any`; use only when unavoidable and explain why
 - Use `@ts-expect-error` (not `@ts-ignore`) with brief reason when necessary
 - Always annotate arrays and objects with explicit types when creating them
+- **CRITICAL: Never duplicate types - always reuse existing types from their source**
+  - For database data: Use Drizzle's `$inferInsert` or `$inferSelect` from schema files
+  - For API responses: Import and reuse types from the API route or shared types
+  - For components: Import prop types from the component definition
+  - Example: `type CategoryInsert = typeof categories.$inferInsert`
 
 ### React
 
@@ -92,7 +107,7 @@ import { Button } from "@/components/ui/button"
 - Keep changes minimal and consistent with existing patterns
 - Extract components used more than 2 times or likely to be reused
 - Apply reusability to repeated code patterns (use arrays + map instead of repeated markup)
-- Organize by feature: `feature/<name>/components`, `feature/<name>/sections`, `feature/<name>/data`
+- Organize by feature: `features/<name>/components`, `features/<name>/sections`, `features/<name>/data`
 - Categories and products are separate features; landing only composes them
 
 ### Formatting

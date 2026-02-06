@@ -3,7 +3,8 @@ import { relations } from "drizzle-orm"
 
 export const categories = pgTable("categories", {
   id: serial("id").primaryKey(),
-  name: text("name").notNull(),
+  displayName: text("display_name").notNull(),
+  slug: text("slug").notNull().unique(),
   categoryId: integer("category_id"),
   description: text("description"),
   imageUrl: text("image_url"),

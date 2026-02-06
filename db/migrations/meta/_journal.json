@@ -8,6 +8,13 @@
       "when": 1769538789938,
       "tag": "0000_simple_electro",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1770413327933,
+      "tag": "0001_glamorous_azazel",
+      "breakpoints": true
     }
   ]
 }
