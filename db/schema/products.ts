@@ -8,7 +8,7 @@ export const products = pgTable("products", {
   name: text("name").notNull(),
   code: text("code").notNull().unique(),
   price: real("price").notNull(),
-  categoryId: integer("category_id").references(() => categories.id),
+  categoryId: integer("category_id").references(() => categories.id, { onDelete: "restrict" }),
   featured: boolean("featured").default(false).notNull(),
   active: boolean("active").default(true).notNull(),
   productDetailsId: integer("product_details_id").references(() => productDetails.id),

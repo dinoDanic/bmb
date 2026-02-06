@@ -1,11 +1,9 @@
-import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
+import { AdminPageLayout } from "@/features/admin/components/admin-page-layout"
 
 export default function DashboardPage() {
   return (
-    <SidebarInset>
-      <header className="">
-        <SidebarTrigger />
-      </header>
-    </SidebarInset>
+    <AdminPageLayout title="Dashboard">
+      {null}
+    </AdminPageLayout>
   )
 }
