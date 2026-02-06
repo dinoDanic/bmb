@@ -66,13 +66,13 @@ export function LoginForm() {
                 name="email"
                 label="Email"
                 type="email"
-                required
+                placeholder='Email'
               />
               <FormInput<LoginFormData>
                 name="password"
                 label="Password"
+                placeholder="Password"
                 type="password"
-                required
               />
             </CardContent>
             <CardFooter>
