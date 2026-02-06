@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 
 const page = () => {
   return (
-    redirect("/admin/auth/login")
+    redirect("/admin/auth/core")
   )
 }
 

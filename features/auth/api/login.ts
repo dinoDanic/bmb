@@ -1,7 +1,6 @@
 "use server"
 
 import { cookies } from "next/headers"
-import { redirect } from "next/navigation"
 import { db } from "@/db"
 import { users } from "@/db/schema"
 import { eq } from "drizzle-orm"
@@ -28,6 +27,7 @@ export async function login(data: { email: string; password: string }) {
     .sign(JWT_SECRET)
 
   const cookieStore = await cookies()
+
   cookieStore.set("admin_session", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -35,6 +35,4 @@ export async function login(data: { email: string; password: string }) {
     maxAge: 60 * 60 * 24,
     path: "/",
   })
-
-  redirect("/admin")
 }

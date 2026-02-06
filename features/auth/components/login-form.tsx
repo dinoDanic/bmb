@@ -43,7 +43,7 @@ export function LoginForm() {
   async function submit(data: LoginFormData) {
     try {
       await login(data)
-      rotuer.push('/admin')
+      rotuer.push('/admin/auth/core')
     } catch (err) {
       console.log("err:", err);
       alert("a jbg")
