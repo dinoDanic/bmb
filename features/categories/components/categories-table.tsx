@@ -1,7 +1,7 @@
 "use client"
 
 import { createColumns } from "./columns"
-import { DataTable } from "./data-table"
+import { DataTable } from "@/components/ui/data-table"
 import type { CategoryWithParent } from "../api/actions"
 import type { Category } from "@/db/types"
 
@@ -13,5 +13,5 @@ type CategoriesTableProps = {
 export function CategoriesTable({ categories, parentCategories }: CategoriesTableProps) {
   const columns = createColumns(parentCategories)
 
-  return <DataTable columns={columns} data={categories} />
+  return <DataTable columns={columns} data={categories} filterPlaceholder="Filter categories..." />
 }

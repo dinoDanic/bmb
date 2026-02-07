@@ -9,17 +9,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Field, FieldLabel, FieldDescription, FieldError } from "@/components/ui/field"
-
-type SelectOption = {
-  value: string
-  label: string
-}
+import { FormOption } from "./types"
 
 type FormSelectProps<T extends FieldValues> = {
   name: Path<T>
   label?: string
   description?: string
-  options: SelectOption[]
+  options: FormOption[]
   placeholder?: string
 }
 

@@ -3,8 +3,11 @@
 import { useState } from "react"
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -21,42 +24,58 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { DataTableToolbar, type DataTableFilters } from "@/components/ui/data-table-toolbar"
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  filterPlaceholder?: string
+  filters?: DataTableFilters<TData>
+  onRowClick?: (row: TData) => void
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  filterPlaceholder = "Filter...",
+  filters,
+  onRowClick,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [globalFilter, setGlobalFilter] = useState("")
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
-  const table = useReactTable({
+  const table = useReactTable<TData>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFacetedRowModel: filters ? getFacetedRowModel() : undefined,
+    getFacetedUniqueValues: filters ? getFacetedUniqueValues() : undefined,
+    onColumnFiltersChange: filters ? setColumnFilters : undefined,
+    onGlobalFilterChange: filters ? undefined : setGlobalFilter,
     onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
-      globalFilter,
+      columnFilters: filters ? columnFilters : undefined,
+      globalFilter: filters ? undefined : globalFilter,
     },
   })
 
   return (
     <div className="space-y-4">
-      <Input
-        placeholder="Filter categories..."
-        value={globalFilter}
-        onChange={(e) => setGlobalFilter(e.target.value)}
-        className="max-w-sm"
-      />
+      {filters ? (
+        <DataTableToolbar table={table} filters={filters} />
+      ) : (
+        <Input
+          placeholder={filterPlaceholder}
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          className="max-w-sm"
+        />
+      )}
       <div className="rounded-xl border">
         <Table>
           <TableHeader>
@@ -75,7 +94,11 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  className={onRowClick ? "cursor-pointer" : undefined}
+                  onClick={onRowClick ? () => onRowClick(row.original) : undefined}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}

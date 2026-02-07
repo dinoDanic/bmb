@@ -20,7 +20,7 @@ export const menuItems: MenuItem[] = [
   },
   {
     title: "Products",
-    url: "#",
+    url: "/admin/auth/core/products",
     icon: Package01Icon,
   },
   {
