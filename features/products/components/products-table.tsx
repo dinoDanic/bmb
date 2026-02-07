@@ -13,11 +13,6 @@ type ProductsTableProps = {
   categoryOptions: FormOption[]
 }
 
-const BOOLEAN_OPTIONS: FormOption[] = [
-  { label: "Yes", value: "true" },
-  { label: "No", value: "false" },
-]
-
 export function ProductsTable({ products, categoryOptions }: ProductsTableProps) {
   const router = useRouter()
   const columns = createColumns()
@@ -34,16 +29,10 @@ export function ProductsTable({ products, categoryOptions }: ProductsTableProps)
           title: "Category",
           options: categoryOptions,
         },
-        {
-          columnKey: "featured",
-          title: "Featured",
-          options: BOOLEAN_OPTIONS,
-        },
-        {
-          columnKey: "active",
-          title: "Active",
-          options: BOOLEAN_OPTIONS,
-        },
+      ],
+      toggle: [
+        { columnKey: "featured", title: "Featured" },
+        { columnKey: "active", title: "Active" },
       ],
     }),
     [categoryOptions]

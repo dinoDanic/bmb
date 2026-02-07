@@ -48,15 +48,13 @@ export function createColumns(): ColumnDef<ProductWithCategory>[] {
       accessorKey: "featured",
       header: "Featured",
       cell: ({ row }) => (row.original.featured ? "\u2713" : "\u2014"),
-      filterFn: (row, id, value: string[]) =>
-        value.includes(String(row.getValue(id))),
+      filterFn: (row, id, value: boolean) => row.getValue(id) === value,
     },
     {
       accessorKey: "active",
       header: "Active",
       cell: ({ row }) => (row.original.active ? "\u2713" : "\u2014"),
-      filterFn: (row, id, value: string[]) =>
-        value.includes(String(row.getValue(id))),
+      filterFn: (row, id, value: boolean) => row.getValue(id) === value,
     },
   ]
 }

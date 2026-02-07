@@ -7,6 +7,7 @@ import { Cancel01Icon } from "@hugeicons/core-free-icons"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter"
+import { DataTableToggleFilter } from "@/components/ui/data-table-toggle-filter"
 import type { FormOption } from "@/components/form/types"
 
 export type DataTableFilters<TData> = {
@@ -18,6 +19,10 @@ export type DataTableFilters<TData> = {
     columnKey: keyof TData & string
     title: string
     options: FormOption[]
+  }>
+  toggle?: Array<{
+    columnKey: keyof TData & string
+    title: string
   }>
 }
 
@@ -60,6 +65,18 @@ export function DataTableToolbar<TData>({
             column={column}
             title={facet.title}
             options={facet.options}
+          />
+        )
+      })}
+      {filters.toggle?.map((toggle) => {
+        const column = table.getColumn(toggle.columnKey)
+        if (!column) return null
+
+        return (
+          <DataTableToggleFilter
+            key={toggle.columnKey}
+            column={column}
+            title={toggle.title}
           />
         )
       })}
