@@ -17,6 +17,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
   Table,
   TableBody,
   TableCell,
@@ -25,6 +32,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { DataTableToolbar, type DataTableFilters } from "@/components/ui/data-table-toolbar"
+
+const PAGE_SIZE_OPTIONS: number[] = [10, 20, 30, 50]
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
@@ -116,7 +125,29 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end gap-2">
+      <div className="flex items-center gap-2">
+        <div className="text-muted-foreground flex-1 text-sm">
+          {table.getFilteredRowModel().rows.length} of{" "}
+          {data.length} row(s)
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-muted-foreground text-sm">Rows</span>
+          <Select
+            value={String(table.getState().pagination.pageSize)}
+            onValueChange={(v) => table.setPageSize(Number(v))}
+          >
+            <SelectTrigger size="sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent align="end">
+              {PAGE_SIZE_OPTIONS.map((size) => (
+                <SelectItem key={size} value={String(size)}>
+                  {size}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <Button
           variant="outline"
           size="sm"

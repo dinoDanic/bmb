@@ -35,7 +35,7 @@ export function createColumns(): ColumnDef<ProductWithCategory>[] {
     {
       accessorKey: "price",
       header: "Price",
-      cell: ({ row }) => `$${row.original.price.toFixed(2)}`,
+      cell: ({ row }) => `${row.original.price.toFixed(2)}`,
     },
     {
       accessorKey: "categoryName",
